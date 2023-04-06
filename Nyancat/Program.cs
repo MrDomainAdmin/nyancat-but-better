@@ -5,9 +5,11 @@ using System.Threading;
 
 namespace Nyancat
 {
+
     public class Program
     {
         private static readonly ManualResetEvent _shutdownBlock = new ManualResetEvent(false);
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
         public static int Main(string[] args)
         {
             try
@@ -70,6 +72,11 @@ namespace Nyancat
                 var showIntro = options.ShowIntro;
                 var scene = showIntro ? new IntroScene() : (IScene)new NyancatScene(frames: options.Frames, showCounter: options.ShowCounter);
 
+                WindowMover windowMover = new WindowMover();
+
+                // Create a new thread and start the window mover
+                Thread windowMoverThread = new Thread(windowMover.Start);
+                windowMoverThread.Start();
                 while (running)
                 {
                     ansi.ResetCursor();
@@ -129,5 +136,7 @@ namespace Nyancat
         }
 
         private static string GetName() => "nyancat";
+
+
     }
 }

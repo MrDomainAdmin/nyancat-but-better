@@ -14,7 +14,7 @@ namespace Nyancat
         public static Options Parse(string[] args)
         {
             var showIntro = false;
-            var showCounter = 1;
+            var showCounter = 0;
             var showTitle = true;
             var frames = int.MaxValue;
             var showVersion = false;
