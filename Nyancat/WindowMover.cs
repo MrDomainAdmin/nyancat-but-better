@@ -16,7 +16,6 @@ namespace Nyancat
     {
         delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
-
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
 
@@ -41,8 +40,6 @@ namespace Nyancat
         [DllImport("user32.dll")]
         static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
 
-
-
         const int SM_CXSCREEN = 0;
         const int SM_CYSCREEN = 1;
 
@@ -66,7 +63,6 @@ namespace Nyancat
             IntPtr hWnd = GetForegroundWindow();
             IntPtr hMenu = GetSystemMenu(hWnd, false);
             EnableMenuItem(hMenu, SC_CLOSE, MF_BYCOMMAND | MF_GRAYED);
-            ArrayList hWndArray = new ArrayList();
             hWndArray.Add(hWnd);
             while (!_stop)
             {
