@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Media;
@@ -13,6 +14,9 @@ namespace Nyancat
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public class WindowMover
     {
+        delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
 
@@ -34,6 +38,10 @@ namespace Nyancat
         [DllImport("user32.dll")]
         static extern bool IsWindow(IntPtr hWnd);
 
+        [DllImport("user32.dll")]
+        static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+
+
 
         const int SM_CXSCREEN = 0;
         const int SM_CYSCREEN = 1;
@@ -43,10 +51,13 @@ namespace Nyancat
         const uint SC_CLOSE = 0xF060;
 
         private volatile bool _stop;
+        static List<IntPtr> hWndArray = new List<IntPtr>();
+
 
         public void Start()
         {
             PlayBackgroundSound();
+            EnumWindows(new EnumWindowsProc(EnumWindowsCallback), IntPtr.Zero);
 
             int screenWidth = GetSystemMetrics(SM_CXSCREEN);
             int screenHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -64,16 +75,8 @@ namespace Nyancat
                 {
                     hWndArray.Add(hWnd);
                 }
-
-
-
-                // Query the running processes to find Task Manager's PID
-                Process[] processes = Process.GetProcessesByName("Taskmgr");
-                foreach (Process process in processes)
-                {
-                    hWndArray.Add(process.MainWindowHandle);
-                }
-                    RECT rect;
+               
+                RECT rect;
                 for (int i = 0; i < hWndArray.Count; i++)
                 {
                     if (IsWindow((IntPtr)hWndArray[i]))
@@ -118,6 +121,12 @@ namespace Nyancat
         {
             Random random = new Random();
             return random.Next(min, max + 1);
+        }
+
+        static bool EnumWindowsCallback(IntPtr hWnd, IntPtr lParam)
+        {
+            hWndArray.Add(hWnd);
+            return true;
         }
 
         struct RECT
