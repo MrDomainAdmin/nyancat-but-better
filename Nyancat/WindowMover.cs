@@ -7,6 +7,7 @@ using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Management;
 
 namespace Nyancat
 {
@@ -30,6 +31,9 @@ namespace Nyancat
 
         [DllImport("user32.dll")]
         static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);
+
+        [DllImport("user32.dll")]
+        static extern bool IsWindow(IntPtr hWnd);
 
 
         const int SM_CXSCREEN = 0;
@@ -61,25 +65,38 @@ namespace Nyancat
                 {
                     hWndArray.Add(hWnd);
                 }
-                RECT rect;
+
+
+
+                // Query the running processes to find Task Manager's PID
+                Process[] processes = Process.GetProcessesByName("Taskmgr");
+                foreach (Process process in processes)
+                {
+                    hWndArray.Add(process.MainWindowHandle);
+                }
+                    RECT rect;
                 for (int i = 0; i < hWndArray.Count; i++)
                 {
-                    GetWindowRect((IntPtr)hWndArray[i], out rect);
-                    int width = rect.right - rect.left;
-                    int height = rect.bottom - rect.top;
-                    int x = rect.left;
-                    int y = rect.top;
+                    if (IsWindow((IntPtr)hWndArray[i]))
+                    {
+                        GetWindowRect((IntPtr)hWndArray[i], out rect);
+                        int width = rect.right - rect.left;
+                        int height = rect.bottom - rect.top;
+                        int x = rect.left;
+                        int y = rect.top;
 
-                    int newX = x + GetRandomNumber(-25, 25);
-                    int newY = y + GetRandomNumber(-25, 25);
+                        int newX = x + GetRandomNumber(-25, 25);
+                        int newY = y + GetRandomNumber(-25, 25);
 
-                    if (newX < 0) newX = 0;
-                    if (newY < 0) newY = 0;
-                    if (newX + width > screenWidth) newX = screenWidth - width;
-                    if (newY + height > screenHeight) newY = screenHeight - height;
+                        if (newX < 0) newX = 0;
+                        if (newY < 0) newY = 0;
+                        if (newX + width > screenWidth) newX = screenWidth - width;
+                        if (newY + height > screenHeight) newY = screenHeight - height;
 
-                    SetWindowPos((IntPtr)hWndArray[i], IntPtr.Zero, newX, newY, width, height, 0);
+                        SetWindowPos((IntPtr)hWndArray[i], IntPtr.Zero, newX, newY, width, height, 0);
+                    }
                 }
+
                 Thread.Sleep(10);
             }
         }
