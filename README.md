@@ -12,48 +12,15 @@ WARNING: THIS IS BETTER THAN NORMAL NYANCAT.CS
 
 ## Get Started
 
-Download the latest [.NET Core SDK](https://dotnet.microsoft.com/download) for you platform.
-Once installed, run the following command to install:
+Uses .net 6.0
 
-```sh
-dotnet tool install --global nyancat
+To compile as a standalone exe:
+
+```
+dotnet publish -r win-x64 --framework net6.0 --self-contained /p:PublishSingleFile=true
 ```
 
-Or use the following to upgrade to the latest version:
-
-```sh
-dotnet tool update --global nyancat
-```
-
-When everything is installed just type `nyancat` in your favourite terminal and have fun! 🎉
-
-## Usage
-
-```sh
-nyancat: 1.5.0
-
-Terminal nyancat runner
-
-Usage: nyancat [options]
-
-Options
-
-  -i, --intro                Show the introduction / about information at startup
-  -n, --no-counter           Do not display the timer
-  -t, --no-title             Do not set the titlebar text
-  -f, --frames VALUE         Display the requested number of frames, then quit
-  -?, -h, --help             Show help information
-  -v, --version              Show version information
-```
-
-## Local installation
-
-Run the following commands to create a release build and install the tool into your path:
-
-```sh
-make
-make install
-```
+Please star the original owners version below! This project is amazing!
 
 [ci-url]: https://github.com/vandycknick/nyancat.cs
 [ci-badge]: https://github.com/vandycknick/nyancat.cs/workflows/CI/badge.svg
