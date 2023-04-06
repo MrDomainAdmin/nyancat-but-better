@@ -37,8 +37,6 @@ namespace Nyancat
         [DllImport("user32.dll")]
         static extern bool IsWindow(IntPtr hWnd);
 
-        [DllImport("user32.dll")]
-        static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
 
         const int SM_CXSCREEN = 0;
         const int SM_CYSCREEN = 1;
@@ -54,7 +52,6 @@ namespace Nyancat
         public void Start()
         {
             PlayBackgroundSound();
-            EnumWindows(new EnumWindowsProc(EnumWindowsCallback), IntPtr.Zero);
 
             int screenWidth = GetSystemMetrics(SM_CXSCREEN);
             int screenHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -119,11 +116,7 @@ namespace Nyancat
             return random.Next(min, max + 1);
         }
 
-        static bool EnumWindowsCallback(IntPtr hWnd, IntPtr lParam)
-        {
-            hWndArray.Add(hWnd);
-            return true;
-        }
+
 
         struct RECT
         {
