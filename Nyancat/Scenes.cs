@@ -99,6 +99,7 @@ namespace Nyancat
 
             for (var row = _minRow; row < _maxRow; ++row)
             {
+                lastPixel = char.MinValue;
                 for (var col = _minCol; col < _maxCol; ++col)
                 {
                     char pixel;
@@ -125,7 +126,7 @@ namespace Nyancat
                     }
                     else
                     {
-                        var start = row * NyancatFrames.FRAME_WIDTH + (row * 1);
+                        var start = row * NyancatFrames.FRAME_WIDTH + (row * 2);
 
                         start += col;
 
@@ -136,13 +137,13 @@ namespace Nyancat
                     {
                         console.Write(pixel);
                         console.Write(pixel);
-
                     }
                     else if (pixel != lastPixel)
                     {
                         var color = AsciiPixelToColor(pixel);
                         console.WriteColor(' ', color);
                         console.Write(' ');
+                        lastPixel = pixel;
                     }
                     else
                     {
