@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nyancat", "Nyancat\Nyancat.csproj", "{EE9176CE-955B-4385-9CA8-69E8695AF4FB}"
 EndProject
@@ -13,9 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EE9176CE-955B-4385-9CA8-69E8695AF4FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +27,8 @@ Global
 		{EE9176CE-955B-4385-9CA8-69E8695AF4FB}.Release|x64.Build.0 = Release|Any CPU
 		{EE9176CE-955B-4385-9CA8-69E8695AF4FB}.Release|x86.ActiveCfg = Release|Any CPU
 		{EE9176CE-955B-4385-9CA8-69E8695AF4FB}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
